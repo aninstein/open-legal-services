@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import logging
 import re
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit, urlunsplit
@@ -14,6 +15,8 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 import httpx
 
 from .db import connection, utcnow
+
+logger = logging.getLogger(__name__)
 
 FEEDS = {
     "law": ("国务院政策发布", "https://www.gov.cn/zhengce/"),
@@ -136,5 +139,5 @@ async def daily_loop():
         try:
             await asyncio.to_thread(sync_all)
         except Exception:
-            pass
+            logger.exception("Official source sync loop failed")
         await asyncio.sleep(3600)

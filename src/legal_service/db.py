@@ -17,12 +17,15 @@ def utcnow() -> str:
 def db_path() -> Path:
     base = Path(os.getenv("APP_DATA_DIR", ".runtime/data")).resolve()
     base.mkdir(parents=True, exist_ok=True, mode=0o700)
+    base.chmod(0o700)
     return base / "legal.sqlite3"
 
 
 @contextmanager
 def connection() -> Iterator[sqlite3.Connection]:
-    con = sqlite3.connect(db_path(), timeout=10)
+    path = db_path()
+    con = sqlite3.connect(path, timeout=10)
+    path.chmod(0o600)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA foreign_keys=ON")
     con.execute("PRAGMA busy_timeout=10000")

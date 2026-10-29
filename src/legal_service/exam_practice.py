@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import os
-import random
+import secrets
 import re
 from typing import Any
 
@@ -67,8 +67,8 @@ async def generate_question(subject: str) -> dict[str, Any]:
     model = selected_model()
     if model.provider != "openai":
         raise GenerationError("模拟法考请配置在线模型")
-    chosen_subject = random.choice(SUBJECTS) if subject == "随机" else subject
-    kind = random.choice(("single", "multiple"))
+    chosen_subject = secrets.choice(SUBJECTS) if subject == "随机" else subject
+    kind = secrets.choice(("single", "multiple"))
     kind_label = "单选，正确选项恰好一个" if kind == "single" else "多选，正确选项恰好两个或三个"
     system = (
         "你是中国国家统一法律职业资格考试的练习题命题助手。只生成原创的中国大陆法律客观题，"
