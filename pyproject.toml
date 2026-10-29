@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-legal-services"
+version = "0.1.0"
+description = "Source-grounded public legal service and exam search"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+  "httpx>=0.28,<1",
+  "python-multipart>=0.0.20",
+  "python-dotenv>=1,<2",
+  "PyYAML>=6,<7",
+  "python-docx>=1.2,<2",
+  "openpyxl>=3.1,<4",
+  "python-pptx>=1.0,<2",
+  "Pillow>=11,<14",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+legal-service = "legal_service.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

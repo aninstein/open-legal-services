@@ -1,0 +1,10 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": ["web"],
+  "locale": "zh-CN",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": ["Select/Listbox", "Date", "Form", "Toast"],
+  "ownership": {"Select/Listbox": "native", "Date": "native"},
+  "requiredCommands": ["syntax"],
+  "commands": {"syntax": "node --check web/app.js"}
+}

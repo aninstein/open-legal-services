@@ -1,0 +1,22 @@
+name: open-legal-services
+services:
+  api:
+    build: .
+    image: open-legal-services:local
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      APP_DATA_DIR: /app/data
+    volumes: [legal-data:/app/data]
+    ports: ['127.0.0.1:${APP_PORT:-8788}:8787']
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8787/healthz', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 12
+    init: true
+    restart: unless-stopped
+volumes:
+  legal-data:
